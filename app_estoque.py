@@ -1,7 +1,6 @@
 # ==================================================================================
 #                        SISTEMA DE CONTROLE DE ESTOQUE
 # ==================================================================================
-# Taís Nakakura
 
 # Bibliotecas
 import os
@@ -183,13 +182,28 @@ def atualizar_produto():
         produto = estoque[nome_produto]
         break
 
-    nova_qtd = input("Quantidade em estoque: ")
-    if nova_qtd != "":
-        produto["quantidade"] = int(nova_qtd)
+    while True:
+        nova_qtd = input("Quantidade em estoque: ")
+        if nova_qtd == "":
+            break
 
-    novo_preco = input("Preço unitário: ")
-    if novo_preco != "":
-        produto["preco"] = float(novo_preco)
+        try:
+            produto["quantidade"] = int(nova_qtd)
+            break
+        except ValueError:
+            msg_erro("Quantidade inválida. Digite um número inteiro")
+        
+    while True:
+        novo_preco = input("Preço unitário: ")
+        if novo_preco == "":
+            break
+
+        try:
+            produto["preco"] = float(novo_preco)
+            break
+        except ValueError:
+            msg_erro("Preço inválido. Digite um número Ex.: 20.99")
+        
 
     msg_sucesso(f"Item {nome_produto.upper()} atualizado.")
 
